@@ -53,6 +53,12 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VsSolutionFiles\VsSolutionFilesLib.csproj">
+      <Project>{3bfd44f3-f20e-48d0-b1a8-5b24af3da4bd}</Project>
+      <Name>VsSolutionFilesLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
