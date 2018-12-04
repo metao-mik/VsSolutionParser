@@ -48,6 +48,30 @@ namespace MetaObjects.VisualStudio.Tools
             projectItems.Add(newProject);
             return newProject;
         }
+
+        public VsSolutionFile ReadSolutionFile(string filePath)
+        {
+            var lines = System.IO.File.ReadAllLines(filePath);
+
+            var line = 0; 
+            while (line < lines.Length)
+            {
+                if (lines[line].StartsWith("Project(\"{"))
+                {
+                    while (line < lines.Length || lines[line].StartsWith("EndProject"))
+                    {
+                        if (lines[line].StartsWith("EndProject"))
+                        {
+                            // add Object
+                        }
+                        line++;
+                    }
+                }
+                line++;
+            }
+
+            return this; 
+        }
     }
 
     public class VsSolutionProjectTypeIds
