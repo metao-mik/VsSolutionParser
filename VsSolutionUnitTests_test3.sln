@@ -1,0 +1,30 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dokumentation", "Dokumentation", "{9A9515AE-59A0-4805-AAE8-BE31FD3A726C}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = ./Dokumenation/Readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{00F1B202-27CA-494F-B405-D6A93E486418}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionIntegrationUnitTests", "C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests", "{5479DAB1-6B5E-4757-9375-B6B099D4160B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionFileLib", "C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionFiles", "{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9400B81-487B-4445-BD8A-040623AABB34}
+	EndGlobalSection
+EndGlobal

@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VsSolutionFiles\VsSolutionFilesLib.csproj">
+    <ProjectReference Include="..\VsSolutionFiles\VsSolutionFileLib.csproj">
       <Project>{3bfd44f3-f20e-48d0-b1a8-5b24af3da4bd}</Project>
-      <Name>VsSolutionFilesLib</Name>
+      <Name>VsSolutionFileLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

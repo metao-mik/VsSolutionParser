@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionUnitTests", "VsSolutionUnitTests\VsSolutionUnitTests.csproj", "{5479DAB1-6B5E-4757-9375-B6B099D4160B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionIntegrationUnitTests", "VsSolutionUnitTests\VsSolutionIntegrationUnitTests.csproj", "{5479DAB1-6B5E-4757-9375-B6B099D4160B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionFilesLib", "VsSolutionFiles\VsSolutionFilesLib.csproj", "{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionFileLib", "VsSolutionFiles\VsSolutionFileLib.csproj", "{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dokumentation", "Dokumentation", "{4B8AE454-4BC9-4DC2-8D88-EFCAAF3C7345}"
 	ProjectSection(SolutionItems) = preProject

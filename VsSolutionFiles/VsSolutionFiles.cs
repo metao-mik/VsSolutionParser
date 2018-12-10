@@ -116,7 +116,7 @@ namespace MetaObjects.VisualStudio.Tools
             {
                 foreach (var item in section.Items)
                 {
-                    sln.ProjectItems[Guid.Parse(item.Key)].ParentPoject = item.Value;
+                    sln.ProjectItems[Guid.Parse(item.Key)].ParentPoject = Guid.Parse(item.Value);
                 }
             }
 

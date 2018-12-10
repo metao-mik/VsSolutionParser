@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VsSolutionFolderExtentions.cs" />
     <Compile Include="VsSolutionFileGlobalSection.cs" />
-    <Compile Include="VsSolutionFileProjectItem.cs" />
+    <Compile Include="VsSolutionFileProject.cs" />
     <Compile Include="VsSolutionFile.cs" />
     <Compile Include="VsSolutionFileExtention.cs" />
     <Compile Include="VsSolutionFiles.cs" />

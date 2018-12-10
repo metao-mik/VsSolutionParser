@@ -48,7 +48,7 @@ namespace MetaObjects.VisualStudio.Tools
             return text.ToArray();
         }
 
-        internal static string[] GetProjectItemLines(this VsSolutionFileProjectItem projectItem)
+        internal static string[] GetProjectItemLines(this VsSolutionFileProject projectItem)
         {
             var text = new List<string>();
             text.AddRange(projectItem.GetProjectItemHeader());
@@ -61,7 +61,7 @@ namespace MetaObjects.VisualStudio.Tools
             return text.ToArray();
         }
 
-        internal static string[] GetProjectItemHeader(this VsSolutionFileProjectItem projectItem)
+        internal static string[] GetProjectItemHeader(this VsSolutionFileProject projectItem)
         {
             return new string[]
             {
@@ -91,7 +91,7 @@ namespace MetaObjects.VisualStudio.Tools
             return text.ToArray();
         }
 
-        internal static string[] GetProjectItemFooter(this VsSolutionFileProjectItem projectItem)
+        internal static string[] GetProjectItemFooter(this VsSolutionFileProject projectItem)
         {
             return new string[]
             {
@@ -169,5 +169,7 @@ namespace MetaObjects.VisualStudio.Tools
 
             list.Add(item.Name, item);
         }
+
+
     }
 }

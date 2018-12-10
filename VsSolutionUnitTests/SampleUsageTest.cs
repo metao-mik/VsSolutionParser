@@ -49,7 +49,33 @@ namespace VsSolutionUnitTests
 
             sln.SaveAs(destSolutionFilePath);
 
+            Assert.IsTrue(1 == 1); 
+            // die Dateien sollten Binär fast gleich sein (Bis auf die Solution-ID) 
         }
 
+        [TestMethod]
+        public void Test_Create_Solutionfile_From_Scratch()
+        {
+            var solFolder = @"c: \users\mklei\documents\visual studio 2015\Projects\VsSolutionUnitTests";
+            var solPath = solFolder + @"\VsSolutionUnitTests_test3.sln";
+            var projPath = @"C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionFiles\VsSolutionFileLib.csproj";
+            var testPath = @"C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests\VsSolutionIntegrationUnitTests.csproj";
+
+            var sln = VsSolutionFiles.Create(solPath);
+            // Dokumentation mit readme.md
+            var doku = sln.AddSolutionFolder("Dokumentation");
+            doku.AddFile("./Dokumenation/Readme.md");
+
+            // Tests mit Unit-Test-Projet 
+            var tests = sln.AddSolutionFolder("Tests");
+            var proj = tests.AddProject(testPath);
+            //var proj = tests.AddProject(solPath + @"\Tests\VsSolutionIntegrationUnitTests.csproj");
+
+            // die Klassenbiliothek
+            proj = sln.AddProjectFile(projPath);
+            //proj = sln.AddProjectFile(solPath + @"\VsSolutionFilesLib.csproj");
+
+            sln.Save();
+        }
     }
 }

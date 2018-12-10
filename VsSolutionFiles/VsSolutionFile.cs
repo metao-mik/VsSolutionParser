@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MetaObjects.VisualStudio.Tools
 {
@@ -22,7 +24,7 @@ namespace MetaObjects.VisualStudio.Tools
         public readonly string SolutionFolder;
         public readonly string Filename;
 
-        public readonly Dictionary<Guid, VsSolutionFileProjectItem> ProjectItems;
+        public readonly Dictionary<Guid, VsSolutionFileProject> ProjectItems;
         public readonly Dictionary<string, VsSolutionFileGlobalSection> GlobalSections;
 
         private string VsVersionHeader; 
@@ -41,7 +43,7 @@ namespace MetaObjects.VisualStudio.Tools
             Filename = System.IO.Path.GetFileName(filePath);
             SolutionId = solutionId;
 
-            ProjectItems = new Dictionary<Guid, Tools.VsSolutionFileProjectItem>();
+            ProjectItems = new Dictionary<Guid, Tools.VsSolutionFileProject>();
 
             GlobalSections = new Dictionary<string, VsSolutionFileGlobalSection>();
             GlobalSections.Add("SolutionConfigurationPlatforms", PrePostSolution.preSolution,
@@ -58,29 +60,71 @@ namespace MetaObjects.VisualStudio.Tools
         internal void SetSolutionId(Guid solutionId)
         {
             SolutionId = solutionId;
+            if(GlobalSections.ContainsKey("ExtensibilityGlobals"))
+            {
+                GlobalSections["ExtensibilityGlobals"].Items["SolutionId"] = solutionId.ToString();
+            }
         }
 
-        public void AddProjectFileCsproj(string csprojFile)
+        public VsSolutionFileProject AddProjectFile(string filepath)
         {
+            if(!File.Exists(filepath))
+            {
+                // Warning, Datei existiert nicht
+            }
 
+            var projectName = Path.GetFileNameWithoutExtension(filepath);
+            var relativePath = Path.GetDirectoryName(filepath);
+            var projectTypeId = GetProjectTypeId(filepath);
+            var projectId = GetProjectId(filepath);
+
+            if(projectId == Guid.Empty)
+            {
+                projectId = Guid.NewGuid();
+                // Warning 
+            }
+
+            return AddProject(projectTypeId, projectName, relativePath, projectId);
         }
 
-        public VsSolutionFileProjectItem AddProject(Guid projectTypeId, string projectName, string projectFolder, Guid projectId)
+        private static Guid GetProjectId(string filepath)
         {
-            var newProject = new Tools.VsSolutionFileProjectItem()
+            var doc = XDocument.Load(filepath);
+            var elem = doc.Root.Descendants().Where(p => p.Name.LocalName == "ProjectGuid").FirstOrDefault();
+            if (elem != null)
+            {
+                return Guid.Parse(elem.Value);
+            }
+            else
+                return Guid.Empty;
+        }
+
+        private static Guid GetProjectTypeId(string filepath)
+        {
+            if (Path.GetExtension(filepath).ToLower() == ".csproj")
+            {
+                return VsSolutionProjectTypeIds.VsSolutionProjectTypeCSharp;
+            }
+            else
+                return Guid.Empty;
+        }
+
+        public VsSolutionFileProject AddProject(Guid projectTypeId, string projectName, string projectFolder, Guid projectId)
+        {
+            var newProject = new Tools.VsSolutionFileProject()
             {
                 ProjectTypeId = projectTypeId,
                 ProjectName = projectName,
                 ProjectPath = projectFolder,
-                ProjectId = projectId
+                ProjectId = projectId, 
+                Solution = this
             };
             ProjectItems.Add(newProject.ProjectId, newProject);
-
             
             return newProject;
         }
 
-        private void AddProjectConfigurationForProject(VsSolutionFileProjectItem project)
+        private void AddProjectConfigurationForProject(VsSolutionFileProject project)
         {
             if (project.ProjectTypeId == VsSolutionProjectTypeIds.VsSolutionProjectTypeCSharp)
             {

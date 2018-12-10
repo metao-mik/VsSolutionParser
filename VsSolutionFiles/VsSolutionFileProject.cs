@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace MetaObjects.VisualStudio.Tools
 {
-    public class VsSolutionFileProjectItem
+    public class VsSolutionFileProject
     {
         public Guid ProjectTypeId { get; set; }
         public String ProjectName { get; set; }
         public String ProjectPath { get; set; }
         public Guid ProjectId { get; set; }
         public Dictionary<string, string> Files { get; set; }
-        public string ParentPoject { get; internal set; }
+        public Guid ParentPoject { get; internal set; }
+        public VsSolutionFile Solution { get; internal set; }
 
-        public VsSolutionFileProjectItem()
+        public VsSolutionFileProject()
         {
             Files = new Dictionary<string, string>();
         }
