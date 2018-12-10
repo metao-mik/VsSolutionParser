@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MetaObjects.VisualStudio.Tools
 {
+
     public class VsSolutionFile
     {
         public readonly Guid SolutionId;
@@ -14,6 +15,9 @@ namespace MetaObjects.VisualStudio.Tools
 
         public readonly List<VsSolutionFileProjectItem> ProjectItems;
         public readonly Dictionary<string, VsSolutionFileGlobalSection> GlobalSections;
+
+        private string VsVersionHeader; 
+
 
         internal static VsSolutionFile OpenSolutionFile(string filename)
         {
@@ -74,30 +78,6 @@ namespace MetaObjects.VisualStudio.Tools
                         "{" + project.ProjectId.ToString().ToUpper() + "." + item.Key + ".Build.0", item.Value);
                 }
             }
-        }
-
-        public VsSolutionFile ReadSolutionFile(string filePath)
-        {
-            var lines = System.IO.File.ReadAllLines(filePath);
-
-            var line = 0; 
-            while (line < lines.Length)
-            {
-                if (lines[line].StartsWith("Project(\"{"))
-                {
-                    while (line < lines.Length || lines[line].StartsWith("EndProject"))
-                    {
-                        if (lines[line].StartsWith("EndProject"))
-                        {
-                            // add Object
-                        }
-                        line++;
-                    }
-                }
-                line++;
-            }
-
-            return this; 
         }
     }
 

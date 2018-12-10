@@ -31,6 +31,7 @@ namespace VsSolutionUnitTests
         {
             var solutionFilePath = @"c:\users\mklei\documents\visual studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests_test.sln";
 
+            var sln = VsSolutionFiles.ReadSolutionFile(solutionFilePath);
 
         }
     }
