@@ -12,7 +12,8 @@ namespace MetaObjects.VisualStudio.Tools
         public readonly string SolutionFolder;
         public readonly string Filename;
 
-        public readonly List<VsSolutionFileProjectItem> projectItems; 
+        public readonly List<VsSolutionFileProjectItem> ProjectItems;
+        public readonly Dictionary<string, VsSolutionFileGlobalSection> GlobalSections;
 
         internal static VsSolutionFile OpenSolutionFile(string filename)
         {
@@ -21,15 +22,25 @@ namespace MetaObjects.VisualStudio.Tools
 
         public VsSolutionFile(string filePath) : this(filePath, Guid.NewGuid()) { }
 
-        public VsSolutionFile(string filePath, Guid solutionId) 
+        public VsSolutionFile(string filePath, Guid solutionId)
         {
-            SolutionFolder = System.IO.Path.GetPathRoot(filePath);
+            SolutionFolder = System.IO.Path.GetDirectoryName(filePath);
             Filename = System.IO.Path.GetFileName(filePath);
             SolutionId = solutionId;
 
-            projectItems = new List<Tools.VsSolutionFileProjectItem>();
-        }
+            ProjectItems = new List<Tools.VsSolutionFileProjectItem>();
 
+            GlobalSections = new Dictionary<string, VsSolutionFileGlobalSection>();
+            GlobalSections.Add("SolutionConfigurationPlatforms", PrePostSolution.preSolution,
+                new string[][] {
+                    new string[] { "Debug|Any CPU", "Debug|Any CPU" },
+                    new string[] { "Release|Any CPU", "Release|Any CPU" }});
+            GlobalSections.Add("ProjectConfigurationPlatforms", PrePostSolution.postSolution);
+            GlobalSections.Add("SolutionProperties", PrePostSolution.preSolution, 
+                new string[][] { new string[] { "HideSolutionNode", "FALSE"} });
+            GlobalSections.Add("ExtensibilityGlobals", PrePostSolution.postSolution,
+                new string[][] { new string[] { "SolutionGuid", "{" + solutionId.ToString().ToUpper() + "}" } });
+        }
 
         public void AddProjectFileCsproj(string csprojFile)
         {
@@ -45,8 +56,24 @@ namespace MetaObjects.VisualStudio.Tools
                 ProjectPath = projectFolder,
                 ProjectId = projectId
             };
-            projectItems.Add(newProject);
+            ProjectItems.Add(newProject);
+
+            
             return newProject;
+        }
+
+        private void AddProjectConfigurationForProject(VsSolutionFileProjectItem project)
+        {
+            if (project.ProjectTypeId == VsSolutionProjectTypeIds.VsSolutionProjectTypeCSharp)
+            {
+                foreach (var item in this.GlobalSections["SolutionConfigurationPlatforms"].Items)
+                {
+                    this.GlobalSections["ProjectConfigurationPlatforms"].Items.Add(
+                        "{" + project.ProjectId.ToString().ToUpper() + "." + item.Key + ".ActiveCfg", item.Value);
+                    this.GlobalSections["ProjectConfigurationPlatforms"].Items.Add(
+                        "{" + project.ProjectId.ToString().ToUpper() + "." + item.Key + ".Build.0", item.Value);
+                }
+            }
         }
 
         public VsSolutionFile ReadSolutionFile(string filePath)

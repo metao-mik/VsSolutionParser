@@ -21,6 +21,8 @@ namespace VsSolutionUnitTests
             //            sln.AddProjectFileCsproj(project1Path);
             //            sln.AddProjectFileCsproj(project2Path);
 
+            sln.SaveSoltionfile();
+
             Assert.IsNotNull(sln);
         }
 

@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{fae04ec0-301f-11d3-bf4b-00c04f79efbc}") = "VsSolutionFilesLib", "VsSolutionFiles\VsSolutionFilesLib.csproj", "{5479dab1-6b5e-4757-9375-b6b099d4160b}"
+EndProject
+Project("{fae04ec0-301f-11d3-bf4b-00c04f79efbc}") = "VsSolutionUnitTests", "VsSolutionUnitTests\VsSolutionUnitTests.csproj", "{5479dab1-6b5e-4757-9375-b6b099d4160b}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4CD9852E-D4C5-44A3-AC36-B25BB4C5560A}
+	EndGlobalSection
+EndGlobal
