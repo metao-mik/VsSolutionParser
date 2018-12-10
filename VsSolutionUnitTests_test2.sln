@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
@@ -31,6 +31,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA778E20-E4BC-425E-BA39-186E396CB877}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5479DAB1-6B5E-4757-9375-B6B099D4160B} = {C9E3F623-0186-47A5-B02A-66600872F0A1}

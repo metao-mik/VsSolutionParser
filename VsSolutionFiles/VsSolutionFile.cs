@@ -9,11 +9,20 @@ namespace MetaObjects.VisualStudio.Tools
 
     public class VsSolutionFile
     {
-        public readonly Guid SolutionId;
+        private Guid _solutionId;
+
+        public Guid SolutionId {
+            get { return _solutionId;
+            }
+            internal set {
+                _solutionId = value;
+            }
+        }
+
         public readonly string SolutionFolder;
         public readonly string Filename;
 
-        public readonly List<VsSolutionFileProjectItem> ProjectItems;
+        public readonly Dictionary<Guid, VsSolutionFileProjectItem> ProjectItems;
         public readonly Dictionary<string, VsSolutionFileGlobalSection> GlobalSections;
 
         private string VsVersionHeader; 
@@ -32,7 +41,7 @@ namespace MetaObjects.VisualStudio.Tools
             Filename = System.IO.Path.GetFileName(filePath);
             SolutionId = solutionId;
 
-            ProjectItems = new List<Tools.VsSolutionFileProjectItem>();
+            ProjectItems = new Dictionary<Guid, Tools.VsSolutionFileProjectItem>();
 
             GlobalSections = new Dictionary<string, VsSolutionFileGlobalSection>();
             GlobalSections.Add("SolutionConfigurationPlatforms", PrePostSolution.preSolution,
@@ -44,6 +53,11 @@ namespace MetaObjects.VisualStudio.Tools
                 new string[][] { new string[] { "HideSolutionNode", "FALSE"} });
             GlobalSections.Add("ExtensibilityGlobals", PrePostSolution.postSolution,
                 new string[][] { new string[] { "SolutionGuid", "{" + solutionId.ToString().ToUpper() + "}" } });
+        }
+
+        internal void SetSolutionId(Guid solutionId)
+        {
+            SolutionId = solutionId;
         }
 
         public void AddProjectFileCsproj(string csprojFile)
@@ -60,7 +74,7 @@ namespace MetaObjects.VisualStudio.Tools
                 ProjectPath = projectFolder,
                 ProjectId = projectId
             };
-            ProjectItems.Add(newProject);
+            ProjectItems.Add(newProject.ProjectId, newProject);
 
             
             return newProject;

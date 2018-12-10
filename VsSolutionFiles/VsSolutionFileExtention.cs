@@ -40,7 +40,10 @@ namespace MetaObjects.VisualStudio.Tools
         {
             var text = new List<string>();
 
-            sln.ProjectItems.ForEach(p => text.AddRange(p.GetProjectItemLines()));
+            foreach (var p in sln.ProjectItems)
+            {
+                text.AddRange(p.Value.GetProjectItemLines());
+            }
 
             return text.ToArray();
         }
@@ -49,9 +52,9 @@ namespace MetaObjects.VisualStudio.Tools
         {
             var text = new List<string>();
             text.AddRange(projectItem.GetProjectItemHeader());
-            if(projectItem.ProjectId == VsSolutionProjectTypeIds.VsSolutionProjectTypeSolutionFolder)
+            if(projectItem.ProjectTypeId == VsSolutionProjectTypeIds.VsSolutionProjectTypeSolutionFolder)
             {
-                GetProjectItemContentFolderSolutionFiles(projectItem.Files);
+                text.AddRange(GetProjectItemContentFolderSolutionFiles(projectItem.Files));
             }
             text.AddRange(projectItem.GetProjectItemFooter());
 
@@ -68,7 +71,12 @@ namespace MetaObjects.VisualStudio.Tools
 
         internal static string[] GetProjectItemContentFolderSolutionFiles(Dictionary<string, string> values)
         {
-            return GetProjectItemContent("SolutionsItems", "preProject", values);
+            if (values.Count > 0)
+            {
+                return GetProjectItemContent("SolutionItems", "preProject", values);
+            }
+            else
+                return new string[] { };
         }
 
         internal static string[] GetProjectItemContent(string projectSection, string prePostProject, Dictionary<string, string> values)
@@ -76,9 +84,9 @@ namespace MetaObjects.VisualStudio.Tools
             var text = new List<string>();
 
             //"ProjectSection(SolutionItems) = preProject",
-            text.Add("ProjectSection(" + projectSection + ") = " + prePostProject);
-            text.AddRange(values.Select(item => "\t" + item.Key + " = " + item.Value));
-            text.Add("EndProjectSection");
+            text.Add("\tProjectSection(" + projectSection + ") = " + prePostProject);
+            text.AddRange(values.Select(item => "\t\t" + item.Key + " = " + item.Value));
+            text.Add("\tEndProjectSection");
             
             return text.ToArray();
         }
@@ -132,12 +140,19 @@ namespace MetaObjects.VisualStudio.Tools
         }
 
 
-        public static string SaveSoltionfile(this VsSolutionFile sln)
+        public static string Save(this VsSolutionFile sln)
+        {
+            var filepath = sln.SolutionFolder + @"\" + sln.Filename;
+            return SaveAs(sln, filepath);
+        }
+
+        public static string SaveAs(this VsSolutionFile sln, string filepath)
         {
             var text = new List<string>();
 
-            System.IO.File.WriteAllLines(sln.SolutionFolder + @"\" + sln.Filename, sln.GetSolutionsFileLines());
-            return sln.Filename;
+            System.IO.File.WriteAllLines(filepath, sln.GetSolutionsFileLines());
+
+            return filepath;
         }
 
 
