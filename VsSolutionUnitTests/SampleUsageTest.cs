@@ -70,11 +70,9 @@ namespace VsSolutionUnitTests
             // Tests mit Unit-Test-Projet 
             var tests = sln.AddSolutionFolder("Tests");
             var proj = tests.AddProject(testPath);
-            //var proj = tests.AddProject(solPath + @"\Tests\VsSolutionIntegrationUnitTests.csproj");
 
             // die Klassenbiliothek
             proj = sln.AddProjectFile(projPath);
-            //proj = sln.AddProjectFile(solPath + @"\VsSolutionFilesLib.csproj");
 
             sln.Save();
         }
