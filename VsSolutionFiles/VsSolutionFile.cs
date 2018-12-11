@@ -24,7 +24,7 @@ namespace MetaObjects.VisualStudio.Tools
         public readonly string SolutionFolder;
         public readonly string Filename;
 
-        public readonly Dictionary<Guid, VsSolutionFileProject> ProjectItems;
+        public readonly Dictionary<Guid, VsSolutionFileProject> Projects;
         public readonly Dictionary<string, VsSolutionFileGlobalSection> GlobalSections;
 
         private string VsVersionHeader; 
@@ -43,7 +43,7 @@ namespace MetaObjects.VisualStudio.Tools
             Filename = System.IO.Path.GetFileName(filePath);
             SolutionId = solutionId;
 
-            ProjectItems = new Dictionary<Guid, Tools.VsSolutionFileProject>();
+            Projects = new Dictionary<Guid, Tools.VsSolutionFileProject>();
 
             GlobalSections = new Dictionary<string, VsSolutionFileGlobalSection>();
             GlobalSections.Add("SolutionConfigurationPlatforms", PrePostSolution.preSolution,
@@ -74,8 +74,8 @@ namespace MetaObjects.VisualStudio.Tools
             }
 
             var projectName = Path.GetFileNameWithoutExtension(filepath);
-            var relativePath = Path.GetDirectoryName(filepath);
-            var projectTypeId = GetProjectTypeId(filepath);
+            var relativePath = GetRelativePathToSolutionFolder(filepath); //  Path.GetDirectoryName(filepath);
+            var projectTypeId = VsSolutionProjectTypeIds.GetProjectTypeIdByFilepath(filepath);
             var projectId = GetProjectId(filepath);
 
             if(projectId == Guid.Empty)
@@ -87,6 +87,20 @@ namespace MetaObjects.VisualStudio.Tools
             return AddProject(projectTypeId, projectName, relativePath, projectId);
         }
 
+        internal string GetRelativePathToSolutionFolder(string filepath)
+        {
+            var folder = this.SolutionFolder;
+
+            Uri pathUri = new Uri(filepath);
+            // Folders must end in a slash
+            if (!folder.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                folder += Path.DirectorySeparatorChar;
+            }
+            Uri folderUri = new Uri(folder);
+            return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
+        }
+
         private static Guid GetProjectId(string filepath)
         {
             var doc = XDocument.Load(filepath);
@@ -94,16 +108,6 @@ namespace MetaObjects.VisualStudio.Tools
             if (elem != null)
             {
                 return Guid.Parse(elem.Value);
-            }
-            else
-                return Guid.Empty;
-        }
-
-        private static Guid GetProjectTypeId(string filepath)
-        {
-            if (Path.GetExtension(filepath).ToLower() == ".csproj")
-            {
-                return VsSolutionProjectTypeIds.VsSolutionProjectTypeCSharp;
             }
             else
                 return Guid.Empty;
@@ -119,8 +123,10 @@ namespace MetaObjects.VisualStudio.Tools
                 ProjectId = projectId, 
                 Solution = this
             };
-            ProjectItems.Add(newProject.ProjectId, newProject);
-            
+            Projects.Add(newProject.ProjectId, newProject);
+
+            AddProjectConfigurationForProject(newProject);
+
             return newProject;
         }
 
@@ -137,11 +143,5 @@ namespace MetaObjects.VisualStudio.Tools
                 }
             }
         }
-    }
-
-    public class VsSolutionProjectTypeIds
-    {
-        public static Guid VsSolutionProjectTypeCSharp = Guid.Parse("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC");
-        public static Guid VsSolutionProjectTypeSolutionFolder = Guid.Parse("2150E333-8FDC-42A3-9474-1A3956D46DE8");
     }
 }

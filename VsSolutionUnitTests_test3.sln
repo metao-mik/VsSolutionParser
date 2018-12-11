@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dokumentation", "Dokumentation", "{9A9515AE-59A0-4805-AAE8-BE31FD3A726C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dokumentation", "Dokumentation", "{72173EF3-3CE9-4B6D-B1BB-EAD6A6EC2C65}"
 	ProjectSection(SolutionItems) = preProject
-		Readme.md = ./Dokumenation/Readme.md
+		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{00F1B202-27CA-494F-B405-D6A93E486418}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9456804E-271C-4C25-9190-29D15C04B42B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionIntegrationUnitTests", "C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests", "{5479DAB1-6B5E-4757-9375-B6B099D4160B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionIntegrationUnitTests", "VsSolutionUnitTests\VsSolutionIntegrationUnitTests.csproj", "{5479DAB1-6B5E-4757-9375-B6B099D4160B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionFileLib", "C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionFiles", "{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsSolutionFileLib", "VsSolutionFiles\VsSolutionFileLib.csproj", "{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,11 +20,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5479DAB1-6B5E-4757-9375-B6B099D4160B.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5479DAB1-6B5E-4757-9375-B6B099D4160B.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5479DAB1-6B5E-4757-9375-B6B099D4160B.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5479DAB1-6B5E-4757-9375-B6B099D4160B.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BFD44F3-F20E-48D0-B1A8-5B24AF3DA4BD.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F9400B81-487B-4445-BD8A-040623AABB34}
+		SolutionGuid = {73C4868E-3380-449B-996D-C184195DC20B}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5479DAB1-6B5E-4757-9375-B6B099D4160B} = {9456804E-271C-4C25-9190-29D15C04B42B}
 	EndGlobalSection
 EndGlobal

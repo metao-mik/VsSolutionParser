@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VsSolutionFolderExtentions.cs" />
+    <Compile Include="Extentions\VsSolutionFileDeserializeExtentions.cs" />
+    <Compile Include="Extentions\VsSolutionFolderExtentions.cs" />
     <Compile Include="VsSolutionFileGlobalSection.cs" />
     <Compile Include="VsSolutionFileProject.cs" />
     <Compile Include="VsSolutionFile.cs" />
-    <Compile Include="VsSolutionFileExtention.cs" />
+    <Compile Include="Extentions\VsSolutionFileSerializeExtention.cs" />
     <Compile Include="VsSolutionFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VsSolutionProjectTypeIds.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

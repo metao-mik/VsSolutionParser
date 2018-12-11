@@ -31,9 +31,9 @@ namespace VsSolutionUnitTests
         {
             var solutionFilePath = @"c:\users\mklei\documents\visual studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests.sln";
 
-            var sln = VsSolutionFiles.ReadSolutionFile(solutionFilePath);
+            var sln = VsSolutionFiles.Open(solutionFilePath);
         
-            Assert.AreEqual(4, sln.ProjectItems.Count);
+            Assert.AreEqual(4, sln.Projects.Count);
         }
 
     
@@ -43,9 +43,9 @@ namespace VsSolutionUnitTests
             var sourceSolutionFilePath = @"c:\users\mklei\documents\visual studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests.sln";
             var destSolutionFilePath = @"c:\users\mklei\documents\visual studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests_test2.sln";
 
-            var sln = VsSolutionFiles.ReadSolutionFile(sourceSolutionFilePath);
+            var sln = VsSolutionFiles.Open(sourceSolutionFilePath);
 
-            Assert.AreEqual(4, sln.ProjectItems.Count);
+            Assert.AreEqual(4, sln.Projects.Count);
 
             sln.SaveAs(destSolutionFilePath);
 
@@ -60,11 +60,12 @@ namespace VsSolutionUnitTests
             var solPath = solFolder + @"\VsSolutionUnitTests_test3.sln";
             var projPath = @"C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionFiles\VsSolutionFileLib.csproj";
             var testPath = @"C:\Users\mklei\Documents\Visual Studio 2015\Projects\VsSolutionUnitTests\VsSolutionUnitTests\VsSolutionIntegrationUnitTests.csproj";
+            var readmePath = @"c:\users\mklei\documents\visual studio 2015\Projects\VsSolutionUnitTests\Readme.md";
 
             var sln = VsSolutionFiles.Create(solPath);
             // Dokumentation mit readme.md
             var doku = sln.AddSolutionFolder("Dokumentation");
-            doku.AddFile("./Dokumenation/Readme.md");
+            doku.AddFile(readmePath);
 
             // Tests mit Unit-Test-Projet 
             var tests = sln.AddSolutionFolder("Tests");

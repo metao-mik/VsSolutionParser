@@ -40,7 +40,7 @@ namespace MetaObjects.VisualStudio.Tools
         {
             var text = new List<string>();
 
-            foreach (var p in sln.ProjectItems)
+            foreach (var p in sln.Projects)
             {
                 text.AddRange(p.Value.GetProjectItemLines());
             }
@@ -102,6 +102,8 @@ namespace MetaObjects.VisualStudio.Tools
 
         internal static string[] GetGlobalSections(this VsSolutionFile sln)
         {
+            sln.RebuildSectionNestedProjects();
+
             var text = new List<string>();
 
             text.Add("Global");
@@ -112,6 +114,27 @@ namespace MetaObjects.VisualStudio.Tools
             text.Add("EndGlobal");
 
             return text.ToArray();
+        }
+
+        internal static void RebuildSectionNestedProjects(this VsSolutionFile sln)
+        {
+            if(sln.GlobalSections.ContainsKey("NestedProjects"))
+            {
+                sln.GlobalSections.Remove("NestedProjects");
+            }
+            var nestedProjectsSection = new VsSolutionFileGlobalSection("NestedProjects", PrePostSolution.preSolution);
+            foreach (var project in sln.Projects)
+            {
+                if(project.Value.ParentPoject != Guid.Empty)
+                {
+                    nestedProjectsSection.Items.Add(project.Key.ToStingVSFormat(), project.Value.ParentPoject.ToStingVSFormat());
+                }
+            }
+
+            if(nestedProjectsSection.Items.Count > 0)
+            {
+                sln.GlobalSections.Add(nestedProjectsSection.Name, nestedProjectsSection);
+            }
         }
 
         internal static string[] GetLines(this VsSolutionFileGlobalSection gs)

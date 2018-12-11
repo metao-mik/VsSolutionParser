@@ -28,6 +28,7 @@ namespace MetaObjects.VisualStudio.Tools
             {
                 relativeFilepath = filepath.Substring(proj.Solution.SolutionFolder.Length);
             }
+            relativeFilepath = proj.Solution.GetRelativePathToSolutionFolder(filepath);
             proj.Files.Add(filename, relativeFilepath);
 
             return relativeFilepath;
@@ -39,6 +40,11 @@ namespace MetaObjects.VisualStudio.Tools
             addedProj.ParentPoject = proj.ProjectId;
 
             return addedProj;
+        }
+
+        public static String ToStingVSFormat(this Guid guid)
+        {
+            return "{" + guid.ToString().ToUpper() + "}";
         }
     }
 }
